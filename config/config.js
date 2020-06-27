@@ -1,0 +1,1 @@
+module.exports.SEED = '@esta-es-la-clave-secreta';
