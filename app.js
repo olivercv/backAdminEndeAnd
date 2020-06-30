@@ -67,7 +67,7 @@ app.use('/uploadfile', uploadFileRoutes);
 app.use('/file', fileRoutes);
 
 
-
+// Configuracion para subir el backend y el front en un solo puerto
 
 app.use('/', express.static('client', {redirect: false}));
 app.get('*', function(req, res, next) {
