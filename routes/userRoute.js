@@ -33,7 +33,7 @@ app.get('/', (req, res, next) => {
                 });
             }
 
-            User.count({}, (err, counter) => {
+            User.countDocuments({}, (err, counter) => {
                 res.status(200).json({
                     ok: true,
                     users: users,

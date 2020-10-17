@@ -65,6 +65,7 @@ app.use('/upload', uploadRoutes);
 app.use('/image', imageRoutes);
 app.use('/uploadfile', uploadFileRoutes);
 app.use('/file', fileRoutes);
+// app.use('/uploads', express.static(path.resolve('uploads')));
 
 
 // Configuracion para subir el backend y el front en un solo puerto

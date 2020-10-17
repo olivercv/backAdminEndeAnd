@@ -30,7 +30,7 @@ app.get('/', (req, res, next) => {
                 });
             }
 
-            Publication.count({}, (err, cunter) => {
+            Publication.countDocuments({}, (err, cunter) => {
                 res.status(200).json({
                     ok: true,
                     publications: publications,

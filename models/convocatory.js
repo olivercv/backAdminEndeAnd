@@ -10,7 +10,8 @@ var convocatorySchema = new Schema({
     fecha_invitacion: { type: Date, required: [true, 'La fecha de invitacion es necesaria'] },
     fecha_presentacion: { type: Date, required: [true, 'La fecha de presentacion es necesaria'] },
     fecha_ampliacion: { type: Date},
-    fecha_consultas: { type: Date }
+    fecha_consultas: { type: Date },
+    // doc: { type: Schema.Types.ObjectId, ref: 'Doc', required:[true, 'El Id de la categoría es obligatorio'] },
     
     
     

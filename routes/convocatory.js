@@ -11,33 +11,38 @@ var Doc = require('../models/doc');
 // ==========================================
 app.get('/', (req, res, next) => {
 
+
+    
     var to = req.query.to || 0;
     to = Number(to);
-    
+
     Convocatory.find({})
         .skip(to)
         .limit(5)
         .exec(
             (err, convocatories) => {
+            if(err) { 
+                return res.status(400).json({
+                    ok: false,
+                    mensaje: 'Error cargando convocatorias',
+                    errors: err
+                });
+            }
 
-                if (err) {
-                    return res.status(500).json({
-                        ok: false,
-                        mensaje: 'Error cargando convocatory',
-                        errors: err
-                    });
-                }
-
-                Convocatory.count({}, (err, conteo) => {
-
-                    res.status(200).json({
-                        ok: true,
-                        convocatories: convocatories,
-                        total: conteo
-                    });
-                })
+            Convocatory.countDocuments({}, (err, cunter) => {
+                res.status(200).json({
+                    ok: true,
+                    convocatories: convocatories,
+                    total: cunter
+                });
 
             });
+            
+    
+
+        });
+
+
 });
 // ==========================================
 // Obtener una adquisicion

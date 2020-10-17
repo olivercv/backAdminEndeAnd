@@ -40,7 +40,7 @@ app.get('/', (req, res, next) => {
                 });
             }
         
-            Notification.count({}, (err, counter) => {
+            Notification.countDocuments({}, (err, counter) => {
                 res.status(200).json({
                     ok: true,
                     notifications: notifications,

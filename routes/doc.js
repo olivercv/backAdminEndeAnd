@@ -11,7 +11,6 @@ app.get('/', (req, res, next) => {
 
     
     Doc.find({})
-        
         .exec(
             (err, docs) => {
 
@@ -23,7 +22,7 @@ app.get('/', (req, res, next) => {
                     });
                 }
 
-                Doc.count({}, (err, conteo) => {
+                Doc.countDocuments({}, (err, conteo) => {
 
                     res.status(200).json({
                         ok: true,
@@ -35,6 +34,34 @@ app.get('/', (req, res, next) => {
             });
 });
 
+
+app.get('/web', (req, res, next) => {
+
+    
+    Doc.find({})
+        .populate('convocatory')
+        .exec(
+            (err, docs) => {
+
+                if (err) {
+                    return res.status(500).json({
+                        ok: false,
+                        mensaje: 'Error cargando doc',
+                        errors: err
+                    });
+                }
+
+                Doc.countDocuments({}, (err, conteo) => {
+
+                    res.status(200).json({
+                        ok: true,
+                        docs: docs,
+                        total: conteo
+                    });
+                })
+
+            });
+});
 
 // ==========================================
 // Actualizar Doc

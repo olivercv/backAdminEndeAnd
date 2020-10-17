@@ -30,7 +30,7 @@ app.get('/', (req, res, next) => {
                 });
             }
         
-            Category.count({}, (err, counter) => {
+            Category.countDocuments({}, (err, counter) => {
                 res.status(200).json({
                     ok: true,
                     categories: categories,

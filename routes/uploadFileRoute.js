@@ -42,10 +42,10 @@ app.put('/:type/:id', (req, res, next) => {
     var fil = req.files.sfile;
     var shortName = fil.name.split('.');
     var ext = shortName[ shortName=1 ];
-
+    var fileName = fil.name;
     // solo se aceptaran estas extensiones
 
-    var validExt = ['pdf', 'doc', 'docx', 'xls', 'xlsx'];
+    var validExt = ['pdf', 'doc', 'docx', 'xls', 'xlsx', 'csv' ];
 
     if ( validExt.indexOf(ext) < 0 ) {
         
@@ -73,7 +73,7 @@ app.put('/:type/:id', (req, res, next) => {
             });
         }
 
-        uploadByType ( type, id, nameFile, res );
+        uploadByType ( type, id, nameFile, fileName, res );
 
         // res.status(200).json({
         //     ok: false,
@@ -87,7 +87,7 @@ app.put('/:type/:id', (req, res, next) => {
 });
 
 
-function uploadByType ( type, id, nameFile, res ) {
+function uploadByType ( type, id, nameFile, fileName, res ) {
 
    
     if ( type === 'publications' ) {
@@ -189,7 +189,7 @@ function uploadByType ( type, id, nameFile, res ) {
             };
 
             doc.sfile = nameFile;
-
+            doc.titulo = fileName;
             doc.save( (err, actualDoc ) => {
             
 
