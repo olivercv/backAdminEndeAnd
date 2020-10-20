@@ -41,11 +41,12 @@ app.put('/:type/:id', (req, res, next) => {
 
     var fil = req.files.sfile;
     var shortName = fil.name.split('.');
-    var ext = shortName[ shortName=1 ];
+    var lenghtExt = shortName.length;
+    var ext = shortName[ lenghtExt-1 ];
     var fileName = fil.name;
     // solo se aceptaran estas extensiones
 
-    var validExt = ['pdf', 'doc', 'docx', 'xls', 'xlsx', 'csv' ];
+    var validExt = ['pdf', 'doc', 'docx', 'xls', 'xlsx', 'csv', 'rar', 'zip' ];
 
     if ( validExt.indexOf(ext) < 0 ) {
         

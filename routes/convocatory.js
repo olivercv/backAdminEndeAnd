@@ -17,8 +17,43 @@ app.get('/', (req, res, next) => {
     to = Number(to);
 
     Convocatory.find({})
+        
         .skip(to)
         .limit(5)
+        .exec(
+            (err, convocatories) => {
+            if(err) { 
+                return res.status(400).json({
+                    ok: false,
+                    mensaje: 'Error cargando convocatorias',
+                    errors: err
+                });
+            }
+
+            Convocatory.countDocuments({}, (err, cunter) => {
+                res.status(200).json({
+                    ok: true,
+                    convocatories: convocatories,
+                    total: cunter
+                });
+
+            });
+            
+    
+
+        });
+
+
+});
+
+// ==========================================
+// Obtener todos las adquisiciones por estado
+// ==========================================
+app.get('/web', (req, res, next) => {
+
+    Convocatory.find({})
+        .populate('docs')
+        .sort({fecha_presentacion: -1})
         .exec(
             (err, convocatories) => {
             if(err) { 
@@ -50,6 +85,7 @@ app.get('/', (req, res, next) => {
 app.get('/:id', (req, res) => {
     var id = req.params.id;
     Convocatory.findById(id)
+    .populate('docs')
     .exec((err,convocatory)=>{
         if(err){
              return res.status(500).json({

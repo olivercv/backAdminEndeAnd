@@ -53,18 +53,18 @@ mongoose.connection.openUri('mongodb://localhost:27017/ende', { useNewUrlParser:
 
 
 // Rutas
-app.use('/user', userRoutes);
-app.use('/login', loginRoutes);
-app.use('/publication', publicationRoutes);
-app.use('/notification', notificationRoutes);
-app.use('/category', categoryRoutes);
-app.use('/convocatory',convocatoriesRoutes);
-app.use('/doc', docRoutes);
-app.use('/search', searchRoutes);
-app.use('/upload', uploadRoutes);
-app.use('/image', imageRoutes);
-app.use('/uploadfile', uploadFileRoutes);
-app.use('/file', fileRoutes);
+app.use('/api/user', userRoutes);
+app.use('/api/login', loginRoutes);
+app.use('/api/publication', publicationRoutes);
+app.use('/api/notification', notificationRoutes);
+app.use('/api/category', categoryRoutes);
+app.use('/api/convocatory',convocatoriesRoutes);
+app.use('/api/doc', docRoutes);
+app.use('/api/search', searchRoutes);
+app.use('/api/upload', uploadRoutes);
+app.use('/api/image', imageRoutes);
+app.use('/api/uploadfile', uploadFileRoutes);
+app.use('/api/file', fileRoutes);
 // app.use('/uploads', express.static(path.resolve('uploads')));
 
 

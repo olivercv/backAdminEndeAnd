@@ -3,6 +3,7 @@ var express = require('express');
 var app = express();
 
 var Doc = require('../models/doc');
+var Convocatory =  require('../models/convocatory');
 
 // ==========================================
 // Obtener todos las adquisiciones
@@ -35,33 +36,6 @@ app.get('/', (req, res, next) => {
 });
 
 
-app.get('/web', (req, res, next) => {
-
-    
-    Doc.find({})
-        .populate('convocatory')
-        .exec(
-            (err, docs) => {
-
-                if (err) {
-                    return res.status(500).json({
-                        ok: false,
-                        mensaje: 'Error cargando doc',
-                        errors: err
-                    });
-                }
-
-                Doc.countDocuments({}, (err, conteo) => {
-
-                    res.status(200).json({
-                        ok: true,
-                        docs: docs,
-                        total: conteo
-                    });
-                })
-
-            });
-});
 
 // ==========================================
 // Actualizar Doc
@@ -121,33 +95,47 @@ app.put('/:id', (req, res) => {
 // ==========================================
 // Crear un nuevo doc
 // ==========================================
-app.post('/', (req, res) => {
+app.post('/', async (req, res) => {
 
     var body = req.body;
-
-    var doc = new Doc({
-        titulo: body.titulo,
-        convocatory: body.convocatory
-        
-    });
-
-    doc.save((err, docSaved) => {
-
-        if (err) {
-            return res.status(400).json({
-                ok: false,
-                mensaje: 'Error al crear doc',
-                errors: err
-            });
-        }
-
-        res.status(201).json({
-            ok: true,
-            doc: docSaved
+    //console.log(body.convocatory);
+    try {
+        const convocatoryRef = await Convocatory.findById(body.convocatory);
+        const doc = new Doc({
+            titulo: body.titulo,  
         });
+        doc.convocatory = convocatoryRef;
+        try {
+            await doc.save();
+            convocatoryRef.docs.push(doc);
 
-
-    });
+            try {
+                await convocatoryRef.save();
+                res.json({
+                    doc: doc
+                });
+                
+            } catch (error) {
+                res.status(500).json({
+                    message: "Something goes wrong",
+                    
+                  });
+            }
+            
+        } catch (error) {
+            res.status(500).json({
+                message: "Something goes wrong",
+                
+              });
+        }
+        
+    } catch (error) {
+        res.status(500).json({
+            message: "Something goes wrong",
+            
+          });
+    }
+    
 
 });
 

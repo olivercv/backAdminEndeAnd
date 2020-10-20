@@ -1,5 +1,6 @@
 var mongoose = require('mongoose');
 const convocatory = require('./convocatory');
+
 var Schema = mongoose.Schema;
 
 
@@ -10,8 +11,7 @@ var docSchema = new Schema({
     sfile: { type: String },
     image_type: {type: String},
     convocatory: {
-        type: Schema.Types.ObjectId, ref: 'Convocatory',
-        required: [true, 'El id convocatori es un campo obligatorio ']
+        type: Schema.Types.ObjectId, ref: 'Convocatory'
     }
 
         
