@@ -46,7 +46,7 @@ app.put('/:type/:id', (req, res, next) => {
     var fileName = fil.name;
     // solo se aceptaran estas extensiones
 
-    var validExt = ['pdf', 'doc', 'docx', 'xls', 'xlsx', 'csv', 'rar', 'zip' ];
+    var validExt = ['pdf', 'doc', 'docx', 'xls', 'xlsx','xlsm', 'csv', 'rar', 'zip' ];
 
     if ( validExt.indexOf(ext) < 0 ) {
         
