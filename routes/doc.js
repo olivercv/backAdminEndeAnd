@@ -100,34 +100,27 @@ app.post('/', async (req, res) => {
     var body = req.body;
     //console.log(body.convocatory);
     try {
-        const convocatoryRef = await Convocatory.findById(body.convocatory);
         const doc = new Doc({
-            titulo: body.titulo,  
+            titulo: body.titulo,
+            convocatory: body.convocatory,  
         });
-        doc.convocatory = convocatoryRef;
-        try {
-            await doc.save();
-            convocatoryRef.docs.push(doc);
-
-            try {
-                await convocatoryRef.save();
-                res.json({
-                    doc: doc
+        
+        await doc.save(async (err,newDoc)=>{
+            const convocatoryRef = await Convocatory.findByIdAndUpdate(body.convocatory,{
+                $push: {docs: newDoc},
+            });
+            if(err){
+                return res.status(500).json({
+                    ok: false,
+                    mensaje: 'Error al crear el documento',
+                    errors: err
                 });
-                
-            } catch (error) {
-                res.status(500).json({
-                    message: "Something goes wrong",
-                    
-                  });
             }
-            
-        } catch (error) {
-            res.status(500).json({
-                message: "Something goes wrong",
-                
-              });
-        }
+            res.status(200).json({
+                ok: true,
+                doc: newDoc
+            });
+        });
         
     } catch (error) {
         res.status(500).json({

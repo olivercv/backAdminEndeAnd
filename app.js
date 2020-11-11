@@ -73,7 +73,7 @@ app.use('/api/file', fileRoutes);
 app.use('/', express.static('client', {redirect: false}));
 app.get('*', function(req, res, next) {
     res.sendFile(path.resolve('client/index.html'));
-});
+}); 
 
 
 // escuchar peticiones
